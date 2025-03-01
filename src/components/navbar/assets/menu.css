@@ -1,0 +1,63 @@
+.menu-position {
+    position: relative;
+}
+
+.menu-trigger {
+    border: none;
+    padding: 2px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    flex-direction: row;
+
+}
+
+.menu {
+    width: fit-content;
+    height: fit-content;
+    perspective: 80em;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.039);
+}
+
+.menu *:not(:empty) {
+    transform-style: preserve-3d;
+}
+
+.menu-item {
+    width: 150px;
+    height: fit-content;
+    margin: 0;
+    color: black;
+    background-color: white;
+    text-align: right;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    transform-origin: top left;
+    transform: rotateX(0deg) rotateY(180deg);
+    backface-visibility: hidden;
+    animation: unFoldAnimation 0.25s ease forwards;
+    z-index: 10;
+}
+
+.menu-item:hover {
+    font-weight: bold;
+}
+
+@keyframes unFoldAnimation {
+    from {
+        transform: rotateX(-90deg) rotateY(180deg) rotateZ(180deg);
+    }
+    to {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+}

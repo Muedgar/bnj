@@ -1,0 +1,156 @@
+/* Responsive slider container */
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 75vh; /* Default height for larger screens */
+  background-color: black;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  overflow: hidden;
+  perspective: 80em;
+  position: relative;
+}
+
+.slider *:not(:empty) {
+  transform-style: preserve-3d;
+}
+
+.view {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  font-size: 4em;
+  padding: 0;
+  font-weight: bolder;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  opacity: 0;
+  transition: all 2s linear;
+  pointer-events: none;
+}
+
+.view .slide-content {
+  opacity: 0;
+  transform: translateX(-100%) rotateZ(10deg);
+  transition: all 2s linear;
+  width: 100%;
+  height: 100%;
+}
+
+.view.active {
+  opacity: 1;
+}
+
+.view.active .slide-content {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: none;
+}
+
+/* Responsive controls */
+.controls {
+  background-color: transparent;
+  width: 100%;
+  height: 55px;
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: center; /* Center controls on mobile */
+  align-items: center;
+  overflow: hidden;
+  z-index: 5;
+  padding: 0 10px; /* Add padding for smaller screens */
+}
+
+.control {
+  width: 18%;
+  max-width: 100px; /* Max width to prevent controls from being too wide */
+  min-width: 20px; /* Min width to ensure visibility on small screens */
+  height: 4px;
+  background-color: aliceblue;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 5px; /* Add margin between controls */
+}
+
+.progress {
+  width: 0%;
+  height: 100%;
+  background-color: red;
+  transition: all 1s linear;
+}
+
+@keyframes zoom {
+  0% {
+      transform: scale(1);
+  }
+  100% {
+      transform: scale(1.5); /* Reduced scale for better mobile performance */
+  }
+}
+
+.animate-zoom {
+  animation: zoom 40s ease forwards;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .slider-container {
+      height: 50vh; /* Reduced height for mobile */
+  }
+  
+  .view {
+      font-size: 2em; /* Smaller font size for mobile */
+  }
+  
+  .controls {
+      height: 40px; /* Slightly smaller controls area */
+      bottom: 5px;
+  }
+  
+  .control {
+      width: 15%; /* Slightly narrower controls */
+      height: 3px; /* Thinner controls */
+      margin: 0 3px; /* Less margin */
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .slider-container {
+      height: 40vh; /* Even smaller height for very small screens */
+  }
+  
+  /* Adjust the absolute positioning of text elements for mobile */
+  .view .slide-content .absolute.top-\[17\%\].ml-20 {
+      margin-left: 10px !important; /* Override the ml-20 with smaller margin */
+      top: 15% !important; /* Adjust top position */
+  }
+  
+  /* Adjust text sizes for mobile */
+  .text-\[\.6em\] {
+      font-size: 0.5em !important;
+  }
+  
+  .text-\[\.7em\] {
+      font-size: 0.6em !important;
+  }
+  
+  .text-\[\.45em\] {
+      font-size: 0.4em !important;
+  }
+  
+  /* Make the button smaller on mobile */
+  button.text-sm {
+      font-size: 0.7rem !important;
+      height: 30px !important;
+      padding: 0.25rem 0.5rem !important;
+  }
+}
