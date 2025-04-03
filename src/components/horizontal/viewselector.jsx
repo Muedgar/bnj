@@ -1,21 +1,29 @@
-'use client'
+'use client';
 
 import { useState, useRef } from 'react';
-import image1 from '@/assets/house_1.jpg'
+import image1 from '@/assets/house_1.jpg';
 import Image from 'next/image';
+
 export default function HouseSelector() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const houseRef = useRef(null);
+    const houseContainerRef = useRef(null);
+    const houseFrameRef = useRef(null);
 
     const handleMenu = () => setMenuOpen(!menuOpen);
     const handleFullScreen = () => {
-        if (houseRef.current.requestFullscreen) {
-            houseRef.current.requestFullscreen();
+        if (houseContainerRef.current) {
+            if (houseContainerRef.current.requestFullscreen) {
+                houseContainerRef.current.requestFullscreen();
+            } else if (houseContainerRef.current.webkitRequestFullscreen) { // For Safari
+                houseContainerRef.current.webkitRequestFullscreen();
+            } else if (houseContainerRef.current.msRequestFullscreen) { // For Internet Explorer
+                houseContainerRef.current.msRequestFullscreen();
+            }
         }
     };
 
     return (
-        <div className="w-screen h-screen relative overflow-hidden">
+        <div ref={houseContainerRef} className="w-screen h-screen relative overflow-hidden">
             <div className="absolute top-20 right-10 z-10 grid place-items-center p-2 bg-white shadow-md">
                 <button 
                     onClick={handleMenu} 
@@ -58,10 +66,10 @@ export default function HouseSelector() {
             </div>
 
             <iframe 
-                ref={houseRef}
+                ref={houseFrameRef} 
                 className="absolute top-0 left-0 w-full h-full border-none"
                 src='https://my.matterport.com/show/?m=DzwrQgyioMs'
             ></iframe>
         </div>
     );
-};
+}
