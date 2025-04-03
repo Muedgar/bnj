@@ -15,3 +15,114 @@
     overflow-x: hidden;
   }
   
+  .menu-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .category-section {
+    margin-bottom: 40px;
+  }
+  
+  .category-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .subcategory-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .subcategory-section {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .subcategory-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .item-card {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .item-image-container {
+    position: relative;
+  }
+  
+  .item-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .item-card:hover .item-overlay {
+    opacity: 1;
+  }
+  
+  .overlay-button {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tooltip-content {
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .item-details {
+    padding: 10px;
+  }
+  
+  .item-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .item-description {
+    font-size: 14px;
+    color: #555;
+  }
