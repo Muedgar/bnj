@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "3dProductsView",
+  title: "Rwanda 3D virtual tours",
   description: "Welcome",
 };
 

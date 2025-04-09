@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import './menu.css';
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef(null);
+    const router = useRouter()
 
     const handleMenu = () => {
         setIsOpen((prev) => !prev);
@@ -23,15 +25,20 @@ export default function Menu() {
         };
     }, []);
 
+    const handleNav = (navigationId) => {
+        router.push(`/#${navigationId.toString().toLowerCase()}`)
+    }
+
     return (
         <div className='menu-position cursor-pointer ml-[20px]' ref={menuRef}>
             <button className="menu-trigger flex" onClick={handleMenu}>
-                <span>English</span> <ChevronDown />
+                 <ChevronDown />
             </button>
             <div className="menu cursor-pointer rounded-lg" style={{ display: isOpen ? 'block' : 'none' }}>
-                {['English', 'Francais', 'Kinyarwanda'].map((lang, index) => (
+                {['Spaces'].map((lang, index) => (
                     <p
-                        key={lang}
+                        key={index}
+                        onClick={() => handleNav(lang)}
                         className="menu-item cursor-pointer text-right pl-5"
                         style={{ 
                             animationName: isOpen ? 'unFoldAnimation' : 'none',
