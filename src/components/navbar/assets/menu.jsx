@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import './menu.css';
 import { ChevronDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef(null);
-    const router = useRouter()
 
     const handleMenu = () => {
         setIsOpen((prev) => !prev);
@@ -25,10 +24,6 @@ export default function Menu() {
         };
     }, []);
 
-    const handleNav = (navigationId) => {
-        router.push(`/#${navigationId.toString().toLowerCase()}`)
-    }
-
     return (
         <div className='menu-position cursor-pointer ml-[20px]' ref={menuRef}>
             <button className="menu-trigger flex" onClick={handleMenu}>
@@ -36,20 +31,21 @@ export default function Menu() {
             </button>
             <div className="menu cursor-pointer rounded-lg" style={{ display: isOpen ? 'block' : 'none' }}>
                 {['Spaces'].map((lang, index) => (
-                    <p
+                    <Link
                         key={index}
-                        onClick={() => handleNav(lang)}
-                        className="menu-item cursor-pointer text-right pl-5"
+                        href={`/#${lang.toString().toLowerCase()}`} 
+                    >
+                        <div className="menu-item cursor-pointer text-right pl-5"
                         style={{ 
                             animationName: isOpen ? 'unFoldAnimation' : 'none',
                             animationDuration: '0.25s',
                             animationTimingFunction: 'ease',
                             animationFillMode: 'forwards',
                             animationDelay: `${index * 0.25}s`
-                        }}
-                    >
+                        }}>
                         {lang}
-                    </p>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>
