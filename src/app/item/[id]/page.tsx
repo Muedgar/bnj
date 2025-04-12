@@ -10,12 +10,12 @@ export default function Item() {
   const menu = getMenu()
   const { id } = useParams()
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const containerRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const foundItem = findItemById(menu, id)
 
   const toggleFullscreen = () => {
-    const element: any = containerRef.current
+    const element = containerRef.current as HTMLDivElement | null
 
     if (!document.fullscreenElement) {
       element?.requestFullscreen()
