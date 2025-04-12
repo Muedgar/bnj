@@ -1,15 +1,11 @@
 'use client'
 import React, { useState } from 'react';
-import * as Tooltip from '@radix-ui/react-tooltip';
-import { Folder, Home, Heart, Plus, Share, Grid } from 'lucide-react';
 import { getMenu } from '@/lib'; // Adjust the import path as needed
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const MenuGrid = () => {
   const [activeCategory, setActiveCategory] = useState('Houses');
   const menuData = getMenu();
-  const navigate = useRouter()
-  console.log(menuData)
   
   // Categories for the filter bar based on your data
   const categories = [
@@ -17,16 +13,6 @@ const MenuGrid = () => {
     { id: 'Cars', label: 'CARS' }
   ];
   
-  // No custom styles needed as we're using standard Tailwind classes
-
-  const handleCardClick = (href) => {
-    if (href) {
-      // In a real application, you would use router.push(href) or similar
-      console.log(`Navigating to: ${href}`);
-      // window.location.href = href;
-      navigate.push(href)
-    }
-  };
 
   return (
     <div id="spaces" className="max-w-screen-xl mx-auto p-4">
@@ -52,7 +38,7 @@ const MenuGrid = () => {
         <div key={category.name} className="mb-12">
           {/* Second Section - Virtual Tour Section */}
           {category.name === activeCategory && (
-            <div className="mt-16">
+            <div>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">Stroll through {category.name}</h2>
               </div>
@@ -65,10 +51,10 @@ const MenuGrid = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {category.menu.flatMap(subcategory => 
                   subcategory.menu.map(item => (
-                    <div 
+                    <Link
+                      href={`${item.href}`}
                       key={`tour-${item.id}`} 
                       className="relative rounded-lg overflow-hidden bg-white shadow-md cursor-pointer hover:shadow-lg transform transition-all duration-200 hover:scale-105"
-                      onClick={() => handleCardClick(item.href)}
                     >
                       <div className="relative h-48 overflow-hidden">
                         <img 
@@ -102,7 +88,7 @@ const MenuGrid = () => {
                         <h3 className="text-xl font-bold text-red-500">{item.name}</h3>
                         <p className="text-sm text-gray-600 mt-1">{item.summary || item.description}</p>
                       </div>
-                    </div>
+                    </Link>
                   ))
                 )}
               </div>
