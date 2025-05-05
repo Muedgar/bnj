@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <PanelLayout>
 
-      <div className="hero-section">
+      <section className="hero-section">
         <Hero />
-      </div>
+      </section>
 
-      <div className="final-section">
+      <section className="final-section">
       <MenuGrid />
-      </div>
+      </section>
     </PanelLayout>
   );
 }

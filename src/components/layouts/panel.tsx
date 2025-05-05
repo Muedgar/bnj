@@ -3,11 +3,11 @@ import NavBarDesktop from "../navbar/navbar_desktop";
 
 export default function PanelLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="main-wrapper">
-        <div className="fixed top-0 z-50 w-fit h-fit">
+        <main className="main-wrapper">
+        <header className="fixed top-0 z-50 w-fit h-fit">
                 <NavBarDesktop />
-        </div>
+        </header>
         {children}
-    </div>
+    </main>
     )
 }

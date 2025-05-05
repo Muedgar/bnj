@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import { getMenu } from "@/lib"
 import findItemById from "@/utils/search"
@@ -8,6 +9,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import * as Dialog from '@radix-ui/react-dialog'
+import { Label } from '@radix-ui/themes/components/context-menu'
 
 export default function Item() {
   const menu = getMenu()
@@ -30,7 +32,6 @@ export default function Item() {
     }
   }
 
-  // Prefetch media assets when they're likely to be viewed
   const prefetchMedia = (src: string) => {
     router.prefetch(src)
   }
@@ -46,91 +47,82 @@ export default function Item() {
 
   if (!foundItem) {
     return (
-      <div className="w-screen h-screen flex flex-col justify-center items-center bg-gray-100">
+      <main className="w-screen h-screen flex flex-col justify-center items-center bg-gray-100" role="main">
         <p className="text-gray-700 text-lg">Listing not found</p>
-        <Link
-          href={'/'}
-          className='mt-4 px-4 py-2 bg-white border border-gray-300 rounded-md shadow hover:bg-gray-100 transition'
-        >
+        <Link href="/" className='mt-4 px-4 py-2 bg-white border border-gray-300 rounded-md shadow hover:bg-gray-100 transition'>
           Go Back
         </Link>
-      </div>
+      </main>
     )
   }
 
   return (
     <>
-      {/* Preload critical assets */}
       <Head>
-        {foundItem.media?.images.slice(0, 3).map((src: string, index: number) => (
-          <link 
-            key={`preload-img-${index}`}
-            rel="preload" 
-            href={src} 
-            as="image"
-          />
+        <title>{foundItem.name} | Virtual Tour</title>
+        <meta name="description" content={`Explore ${foundItem.name} via a 3D virtual tour and browse media content.`} />
+        <meta property="og:title" content={foundItem.name} />
+        <meta property="og:description" content={`View ${foundItem.name} located in ${foundItem.location.city || ''}, ${foundItem.location.country}.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={foundItem.media?.images[0]} />
+        {foundItem.media?.images.slice(0, 3).map((src: string, i: number) => (
+          <link key={i} rel="preload" href={src} as="image" />
         ))}
       </Head>
 
-      <div className="max-w-screen-xl mx-auto p-6 mt-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-
-          {/* Virtual Tour Embed */}
+      <main className="max-w-screen-xl mx-auto p-6 mt-28" role="main">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" aria-label="Virtual tour and item details">
           <div ref={containerRef} className="relative rounded-lg overflow-hidden shadow-md bg-black h-[60vh]">
             <iframe 
-              src={foundItem.spaceUrl} 
-              className="w-full h-full" 
+              src={foundItem.spaceUrl}
+              className="w-full h-full"
               allowFullScreen
               title={`Virtual tour of ${foundItem.name}`}
             />
             <button
               onClick={toggleFullscreen}
-              onTouchEnd={toggleFullscreen}
-              className="absolute bottom-4 right-4 bg-white rounded-md p-2 shadow hover:bg-gray-100 transition"
               aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              className="absolute bottom-4 right-4 bg-white rounded-md p-2 shadow hover:bg-gray-100 transition"
             >
               {isFullscreen ? <MinimizeIcon size={18} /> : <FullscreenIcon size={18} />}
             </button>
           </div>
 
-          {/* Details Panel */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h1 className="text-2xl font-bold text-red-500 mb-2">{foundItem.name}</h1>
-            <p className="text-gray-600 mb-4 text-sm">{foundItem.summary || 'No summary provided.'}</p>
+          <article className="bg-white rounded-lg shadow-md p-6" aria-labelledby="item-title">
+            <header>
+              <h1 id="item-title" className="text-2xl font-bold text-red-500 mb-2">{foundItem.name}</h1>
+              <p className="text-gray-600 mb-4 text-sm">{foundItem.summary || 'No summary provided.'}</p>
+            </header>
 
-            <div className="mb-4">
+            <section className="mb-4">
               <h2 className="font-semibold text-lg text-gray-800 mb-1">Category</h2>
               <p className="text-gray-600">{foundItem.category} - {foundItem.subcategory}</p>
-            </div>
+            </section>
 
-            <div className="mb-4">
+            <section className="mb-4">
               <h2 className="font-semibold text-lg text-gray-800 mb-1">Location</h2>
               <p className="text-gray-600">
                 {foundItem.location.city || 'City'}, {foundItem.location.province || 'Province'}, {foundItem.location.country}
               </p>
-            </div>
+            </section>
 
-            <div className="mb-4">
+            <section className="mb-4">
               <h2 className="font-semibold text-lg text-gray-800 mb-1">Contact</h2>
               <p className="text-gray-600 text-sm">
                 {foundItem.contactName || 'N/A'}<br />
                 {foundItem.contactEmail || 'N/A'}<br />
                 {foundItem.contactPhone || 'N/A'}
               </p>
-            </div>
+            </section>
 
-            <Link
-              href={"/"}
-              className="mt-6 inline-block bg-gray-800 text-white text-sm px-5 py-2 rounded-md hover:bg-gray-700 transition"
-            >
+            <Link href="/" className="mt-6 inline-block bg-gray-800 text-white text-sm px-5 py-2 rounded-md hover:bg-gray-700 transition">
               Back to Menu
             </Link>
-          </div>
-        </div>
+          </article>
+        </section>
 
-        {/* Media Grid */}
-        {foundItem.media && (foundItem.media.images.length > 0 || foundItem.media.videos.length > 0) && (
-          <div className="mt-12">
+        {foundItem.media && (foundItem.media.images.length || foundItem.media.videos.length) > 0 && (
+          <section className="mt-12" aria-label="Photo and video gallery">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Photos and Video</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {foundItem.media.images.map((src: string, index: number) => (
@@ -140,18 +132,16 @@ export default function Item() {
                   onMouseEnter={() => prefetchMedia(src)}
                   onFocus={() => prefetchMedia(src)}
                   className="aspect-square relative rounded-md overflow-hidden shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-red-500"
-                  aria-label={`View image ${index + 1} in full screen`}
+                  aria-label={`View image ${index + 1}`}
                 >
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={src}
-                      alt={`Image ${index + 1}`}
-                      className="object-cover rounded-md"
-                      fill
-                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      priority={index < 3}
-                    />
-                  </div>
+                  <Image
+                    src={src}
+                    alt={`Image ${index + 1}`}
+                    fill
+                    className="object-cover rounded-md"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    priority={index < 3}
+                  />
                 </button>
               ))}
               {foundItem.media.videos.map((src: string, index: number) => (
@@ -161,40 +151,36 @@ export default function Item() {
                   onMouseEnter={() => prefetchMedia(src)}
                   onFocus={() => prefetchMedia(src)}
                   className="aspect-square relative rounded-md overflow-hidden shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-red-500"
-                  aria-label={`View video ${index + 1} in full screen`}
+                  aria-label={`View video ${index + 1}`}
                 >
                   <video
-                    className="w-full h-full object-cover"
-                    poster={foundItem.media.images[index] || undefined}
                     muted
                     loop
                     playsInline
                     preload="metadata"
-                    aria-hidden="true"
+                    poster={foundItem.media.images[index] || undefined}
+                    className="w-full h-full object-cover"
                   >
                     <source src={src} type="video/mp4" />
                   </video>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                  </div>
                 </button>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Modal */}
+        {/* Dialog Modal */}
         <Dialog.Root open={!!selectedMedia} onOpenChange={(open) => !open && setSelectedMedia(null)}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black/80 z-50" />
+            <Dialog.Title>
+              <Label>Media Viewer Modal</Label>
+            </Dialog.Title>
             <Dialog.Content
               className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[90vw] max-h-[90vh] z-50 focus:outline-none"
               onEscapeKeyDown={() => setSelectedMedia(null)}
               onPointerDownOutside={() => setSelectedMedia(null)}
+              aria-label="Media Viewer Modal"
             >
               <div className="absolute top-0 right-0 p-4 z-50">
                 <Dialog.Close asChild>
@@ -208,26 +194,15 @@ export default function Item() {
               </div>
 
               <div className="w-full h-full flex items-center justify-center p-4">
-                <Dialog.Title className="sr-only">
-                  {selectedMedia?.type === 'image' ? 'Image Viewer' : 'Video Player'}
-                </Dialog.Title>
-                <Dialog.Description className="sr-only">
-                  {selectedMedia?.type === 'image' 
-                    ? 'Viewing image in full screen mode' 
-                    : 'Viewing video in full screen mode'}
-                </Dialog.Description>
-
                 {selectedMedia?.type === 'image' ? (
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={selectedMedia.src}
-                      alt="Full size media"
-                      className="object-contain"
-                      fill
-                      sizes="100vw"
-                      priority
-                    />
-                  </div>
+                  <Image
+                    src={selectedMedia.src}
+                    alt="Full-size media"
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    priority
+                  />
                 ) : (
                   <video
                     controls
@@ -236,14 +211,13 @@ export default function Item() {
                     aria-label="Full screen video player"
                   >
                     <source src={selectedMedia?.src} type="video/mp4" />
-                    Your browser does not support the video tag.
                   </video>
                 )}
               </div>
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
-      </div>
+      </main>
     </>
   )
 }
