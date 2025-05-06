@@ -17,17 +17,19 @@ import image6 from './images/Mr-Amons-house-Bathroom-Defurnished 1.jpg';
 
 export const amons_house: IItem = {
   id: "48269e9b-cbc3-49c2-be58-651a73172a48",
-  name: "Mr. Amons house",
+  name: "Mr. Amon's House – Rwanda Residential 3D Virtual Tour",
   icon: HouseIcon,
   href: "/item/48269e9b-cbc3-49c2-be58-651a73172a48",
   spaceUrl: "https://my.matterport.com/show/?m=RBqUhqqbHu9",
-  description: "",
-  summary: "",
-  url: "",
-  presentedBy: "",
-  image: "",
+  description:
+    "Step inside Mr. Amon’s residential house through a fully interactive 3D virtual tour. This beautiful Rwandan home blends traditional charm with modern finishes and is now available to explore online. Perfect for prospective buyers, renters, or anyone interested in real estate in Rwanda.",
+  summary:
+    "Take a 3D virtual tour of Mr. Amon’s house – a residential property in Rwanda featuring spacious interiors, multiple bathrooms, and balcony views.",
+  url: "https://www.rwanda3dvirtualtours.com/item/48269e9b-cbc3-49c2-be58-651a73172a48",
+  presentedBy: "Rwanda 3D Virtual Tours",
+  image: image1.src,
   contactPhone: "",
-  contactName: "",
+  contactName: "Mr. Amon",
   contactEmail: "",
   location: {
     country: "Rwanda",
@@ -40,14 +42,15 @@ export const amons_house: IItem = {
   media: {
     videos: [video1, video2, video3],
     images: [
-      image1.src,
-      image2.src,
-      image3.src,
-      image4.src,
-      image5.src,
-      image6.src
+      image1.src, // alt: "Living Room – Mr. Amon’s House Rwanda 3D Tour"
+      image2.src, // alt: "Interior view – Mr. Amon’s Home Kigali"
+      image3.src, // alt: "Balcony (unfurnished) – Residential Rwanda tour"
+      image4.src, // alt: "Balcony with view – Amon's Kigali house"
+      image5.src, // alt: "Modern bathroom – Mr. Amon’s Kigali house"
+      image6.src  // alt: "Unfurnished bathroom – Kigali 3D residential tour"
     ]
   },
   category: 'Houses',
   subcategory: 'Residential property'
-}
+};
+
