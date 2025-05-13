@@ -10,6 +10,8 @@ import image3 from '@/assets/house_3.jpg';
 import image4 from '@/assets/house_4.jpg';
 import image5 from '@/assets/house_5.jpg';
 import { useRouter } from 'next/navigation';
+import { getMenu } from '@/lib';
+import Link from 'next/link';
 
 const Slider = () => {
   const [currentProgressIndex, setCurrentProgressIndex] = useState(0);
@@ -103,26 +105,33 @@ const Slider = () => {
     router.push("/#spaces");
   };
 
+  const menuData = getMenu();
+
+
   const slidesContent = [
     {
-      title: 'Kigali Homes',
-      subtitle: 'Discover modern houses in the heart of Kigali',
+      id: menuData[0].menu[1].menu[0].id,
+      title: menuData[0].menu[1].menu[0].name,
+      subtitle: menuData[0].menu[1].menu[0].description,
+      image:  menuData[0].menu[1].menu[0].media.images[0]
     },
     {
-      title: 'Luxury Villas',
-      subtitle: 'Live comfortably in Rwanda’s peaceful suburbs',
+      id: menuData[0].menu[2].menu[0].id,
+      title: menuData[0].menu[2].menu[0].name,
+      subtitle: menuData[0].menu[2].menu[0].description,
+      image:  menuData[0].menu[2].menu[0].media.images[0]
     },
     {
-      title: 'Affordable Rentals',
-      subtitle: 'Find quality houses within your budget',
+      id: menuData[0].menu[3].menu[0].id,
+      title: menuData[0].menu[3].menu[0].name,
+      subtitle: menuData[0].menu[3].menu[0].description,
+      image:  menuData[0].menu[3].menu[0].media.images[0]
     },
     {
-      title: 'Cars for Sale',
-      subtitle: 'Explore the best car deals in Rwanda today',
-    },
-    {
-      title: 'Drive Rwanda',
-      subtitle: 'From compact to SUV—your ideal ride is here',
+      id: menuData[1].menu[0].menu[0].id,
+      title: menuData[1].menu[0].menu[0].name,
+      subtitle: menuData[1].menu[0].menu[0].description,
+      image:  menuData[1].menu[0].menu[0].media.images[0]
     },
   ];
 
@@ -134,7 +143,9 @@ const Slider = () => {
             <div className="slide-content">
               <div className='w-full h-full relative'>
                 <Image 
-                  src={[image1, image2, image3, image4, image5][index]} 
+                  src={slide.image} 
+                  width={1200}
+                  height={1200}
                   alt='slide image' 
                   className='w-full h-full object-cover animate-zoom bg-no-repeat' 
                   priority={index === 0}
@@ -144,12 +155,13 @@ const Slider = () => {
                 <div className={getTextContainerClass()}>
                   <p className='text-white text-[.6em] font-light text-left'>Explore a virtual tour of</p>
                   <p className='text-white text-[.7em] font-extrabold text-left'>{slide.title}</p>
-                  <p className='text-white text-[.45em] font-thin text-left'>{slide.subtitle}</p>
-                  <button 
-                    onClick={handleViewSpaces} 
+                  {/* <p className='text-white text-[.45em] font-thin text-left'>{slide.subtitle}</p> */}
+                  <Link 
+                    href={`/item/${slide.id}`}
+                    // onClick={handleViewSpaces} 
                     className='text-left text-sm w-fit h-[35px] bg-white rounded-md p-2 mt-2 shadow shadow-[#3333335f] cursor-pointer hover:bg-gray-200 pointer-events-auto'>
-                    View Listings
-                  </button>
+                    View Space
+                  </Link>
                 </div>
               </div>
             </div>
