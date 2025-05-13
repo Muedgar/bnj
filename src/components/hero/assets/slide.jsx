@@ -157,6 +157,7 @@ const Slider = () => {
                   <p className='text-white text-[.7em] font-extrabold text-left'>{slide.title}</p>
                   {/* <p className='text-white text-[.45em] font-thin text-left'>{slide.subtitle}</p> */}
                   <Link 
+                  prefetch={true}
                     href={`/item/${slide.id}`}
                     // onClick={handleViewSpaces} 
                     className='text-left text-sm w-fit h-[35px] bg-white rounded-md p-2 mt-2 shadow shadow-[#3333335f] cursor-pointer hover:bg-gray-200 pointer-events-auto'>

@@ -8,7 +8,7 @@ export default function NavBarDesktop() {
 
     return (
         <div className="z-20 w-screen h-[66px] bg-[rgb(34,34,34)] pl-2 lg:pl-10 pr-2 lg:pr-10 flex justify-between items-center">
-            <Link href={'/'} className="flex flex-row justify-start items-center mt-[-10px] cursor-pointer">
+            <Link prefetch={true} href={'/'} className="flex flex-row justify-start items-center mt-[-10px] cursor-pointer">
                 <div className='mt-[-5px]'>
                     <Cube />
                 </div>

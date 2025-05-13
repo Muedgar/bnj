@@ -49,7 +49,7 @@ export default function Item() {
     return (
       <main className="w-screen h-screen flex flex-col justify-center items-center bg-gray-100" role="main">
         <p className="text-gray-700 text-lg">Listing not found</p>
-        <Link href="/" className='mt-4 px-4 py-2 bg-white border border-gray-300 rounded-md shadow hover:bg-gray-100 transition'>
+        <Link prefetch={true} href="/" className='mt-4 px-4 py-2 bg-white border border-gray-300 rounded-md shadow hover:bg-gray-100 transition'>
           Go Back
         </Link>
       </main>
@@ -115,7 +115,7 @@ export default function Item() {
               </p>
             </section>
 
-            <Link href="/" className="mt-6 inline-block bg-gray-800 text-white text-sm px-5 py-2 rounded-md hover:bg-gray-700 transition">
+            <Link prefetch={true} href="/" className="mt-6 inline-block bg-gray-800 text-white text-sm px-5 py-2 rounded-md hover:bg-gray-700 transition">
               Back to Menu
             </Link>
           </article>
