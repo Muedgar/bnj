@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import NavBarDesktop from "../navbar/navbar_desktop";
+import Footer from "../footer/footer";
 
 export default function PanelLayout({ children }: { children: ReactNode }) {
     return (
@@ -8,6 +9,9 @@ export default function PanelLayout({ children }: { children: ReactNode }) {
                 <NavBarDesktop />
         </header>
         {children}
+        <section>
+        <Footer />
+      </section>
     </main>
     )
 }
