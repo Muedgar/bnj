@@ -48,6 +48,7 @@ const MenuGrid = () => {
                 {category.menu.flatMap((subcategory) =>
                   subcategory.menu.map((item) => (
                     <Link
+                    prefetch={true}
                       href={item.href}
                       key={`tour-${item.id}`}
                       className="snap-start flex-shrink-0 w-72 sm:w-80 md:w-96 rounded-lg overflow-hidden bg-white shadow-md cursor-pointer hover:shadow-lg transform transition-all duration-200 hover:scale-105"

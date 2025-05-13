@@ -32,6 +32,7 @@ export default function Menu() {
             <div className="menu cursor-pointer rounded-lg" style={{ display: isOpen ? 'block' : 'none' }}>
                 {['Spaces'].map((lang, index) => (
                     <Link
+                    prefetch={true}
                         key={index}
                         href={`/#${lang.toString().toLowerCase()}`} 
                     >

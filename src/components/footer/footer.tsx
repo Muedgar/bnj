@@ -35,7 +35,7 @@ const Footer = () => {
         {/* Brand & Description */}
         <div className="col-span-2 flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <Link href={'/'} className="flex flex-row justify-start items-center mt-[-10px] cursor-pointer">
+            <Link prefetch={true} href={'/'} className="flex flex-row justify-start items-center mt-[-10px] cursor-pointer">
                 <div className='mt-[-5px]'>
                     <Cube />
                 </div>
@@ -63,7 +63,7 @@ const Footer = () => {
           <h4 className="text-sm font-semibold mb-4">Spaces</h4>
           <ul className="space-y-2 text-sm text-gray-300">
             {footerContent.map((footerItem, index) => (
-                <li className='underline' key={index}><Link className='flex' href={`/item/${footerItem.id}`}><ArrowRight /> {footerItem.title}</Link></li>
+                <li className='underline' key={index}><Link prefetch={true} className='flex' href={`/item/${footerItem.id}`}><ArrowRight /> {footerItem.title}</Link></li>
             ))}
           </ul>
         </div>
